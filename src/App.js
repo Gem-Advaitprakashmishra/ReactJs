@@ -1,33 +1,37 @@
-import React,{useState} from 'react';
-import data from './data'
-import Tours from './Components/Tours';
+import logo from './logo.svg';
+import './App.css';
+import Header from './Component/Header';
+import VerSlider from './Component/VerSlider';
+import { useState } from 'react';
+import Mainscreen from './Component/Mainscreen';
+import Data from "./data";
 function App() {
-
-const [toursdata,setTours] =  useState(data);
-
-function RemoveCard(ids)
-{ 
- const newData = toursdata.filter((tour)=> tour.id != ids);
-  setTours(newData);
-}
-function refreshHandler()
-{
-   setTours(data);
-}
-if(toursdata.length==0)
-{
-  return(
-    <div className='refresh'>
-      <h1 >No Tours Left </h1>
-      <button className="button" onClick={refreshHandler}>Refresh</button>
-    </div>
-  );
-}
-   
+  
+  const [employeeData,SetEmployeeData] = useState(Data);
+  const [showSlider, setShowSlider] = useState(true);
+ 
+  const VerticalSlideBar = () =>{
+    
+    setShowSlider(!showSlider);
+  }
+    
+  //  function  AddnewEmployee(formData)
+  //  {debugger;
+  //   const newEmp = Data.push(formData)
+  //   SetEmployeeData(newEmp);
+  //  }
 
   return (
     <div>
-    <Tours tourdata = {toursdata} RemoveCard = {RemoveCard} ></Tours>
+      <Header VerticalSlideBar ={VerticalSlideBar} />
+      <div className='row'>
+        <div className='col-md-2'>
+        {showSlider ? <VerSlider /> : false }     
+        </div >
+         <div className='col-md-10'><Mainscreen employeeData={employeeData}  /></div>
+            
+      </div>
+     
     </div>
   );
 }
